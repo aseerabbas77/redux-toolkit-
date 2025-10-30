@@ -1,14 +1,19 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { removeFromCart, clearCart } from "../features/cart/cartSlice";
+import {
+  removeFromCart,
+  clearCart,
+  decreaseQuantity,
+  increaseQuantity,
+} from "../features/cart/cartSlice";
 import { useNavigate } from "react-router-dom";
+import { FaEye } from "react-icons/fa";
 
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // 🔹 Total price calculation
   const totalPrice = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
     0
@@ -22,30 +27,49 @@ const Cart = () => {
     );
 
   return (
-    <div className="fixed inset-0 flex justify-center items-center bg-gray-50">
-      <div className="flex flex-col p-6 shadow-lg bg-white rounded-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-4 text-center text-blue-600">
-          Your Cart
-        </h2>
-
+    <div className="flex flex-col items-center bg-gray-50 min-h-screen ">
+  
+      <div className="grid sm:grid-cols-1 md:grid-cols-4 items-center p-6 shadow-lg bg-white rounded-lg w-full mx-4 my-10">
         {cartItems.map((item) => (
           <div
             key={item.id}
-            className="flex items-center justify-between border-b py-3"
+            className="flex flex-col items-center justify-center w-full h-full shadow rounded-lg border-b py-5 ml-2 mt-2"
           >
             <img
               src={item.image}
               alt={item.title}
-              className="w-16 h-16 object-contain rounded"
+              className="w-[200px] h-[200px] object-contain rounded"
             />
 
-            <div className="flex-1 px-4">
+            <div className="flex-1 px-4 text-center">
               <h3 className="font-semibold text-gray-800">{item.title}</h3>
               <p className="text-gray-600">${item.price}</p>
             </div>
 
-            <div className="flex items-center gap-3">
-              <span className="text-gray-700">x {item.quantity}</span>
+            <div className="flex items-center gap-3 mt-3">
+              <button
+                onClick={() => navigate(`/product/${item.id}`)}
+                className="bg-gray-200 text-gray-800 px-6 py-2 rounded-md hover:bg-gray-300 flex items-center gap-1 text-sm"
+              >
+                <FaEye /> View
+              </button>
+
+              <button
+                onClick={() => dispatch(decreaseQuantity(item.id))}
+                className="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded text-lg"
+              >
+                -
+              </button>
+
+              <span className="text-gray-700 font-medium">{item.quantity}</span>
+
+              <button
+                onClick={() => dispatch(increaseQuantity(item.id))}
+                className="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded text-lg"
+              >
+                +
+              </button>
+
               <button
                 onClick={() => dispatch(removeFromCart(item.id))}
                 className="text-red-600 hover:text-red-800 text-lg"
@@ -55,28 +79,30 @@ const Cart = () => {
             </div>
           </div>
         ))}
+      </div>
 
-        {/* 💰 Total Price */}
-        <div className="flex justify-between items-center mt-4 text-lg font-semibold text-gray-800">
+      {/* ✅ Total price + Buttons center mein, neat & small */}
+      <div className="flex flex-col items-center space-y-4 mb-10">
+        <div className="flex items-center gap-2 text-2xl font-semibold text-gray-800">
           <span>Total:</span>
           <span>${totalPrice.toFixed(2)}</span>
         </div>
 
-        {/* 🧹 Clear Cart Button */}
-        <button
-          onClick={() => dispatch(clearCart())}
-          className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 mt-6 rounded w-full transition"
-        >
-          Clear Cart
-        </button>
+        <div className="flex gap-4">
+          <button
+            onClick={() => dispatch(clearCart())}
+            className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-md text-sm transition"
+          >
+            Clear Cart
+          </button>
 
-        {/* 💳 Checkout Button */}
-        <button
-          onClick={() => navigate("/checkout")}
-          className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 mt-3 rounded w-full transition"
-        >
-          Checkout
-        </button>
+          <button
+            onClick={() => navigate("/checkout")}
+            className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-md text-sm transition"
+          >
+            Checkout
+          </button>
+        </div>
       </div>
     </div>
   );

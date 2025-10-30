@@ -44,18 +44,18 @@ const ProductList = () => {
             <p className="text-gray-600 line-clamp-3 min-h-[60px]"></p>
           </div>
 
-          {/* --- Buttons (always at bottom) --- */}
-          <div className="flex justify-between items-center mt-4">
+        
+          <div className="flex flex-col md:flex-row justify-center items-center gap-2  mt-4">
             <button
               onClick={() => dispatch(addToCart(product))}
-              className="bg-blue-600 text-white px-[60px] py-2 rounded-md hover:bg-blue-700 flex items-center gap-2"
+              className="bg-blue-600 text-white px-[50px] py-2 w-full md:w-auto rounded-md hover:bg-blue-700 flex items-center gap-2"
             >
               <FaShoppingCart /> Add
             </button>
 
             <button
               onClick={() => navigate(`/product/${product.id}`)}
-              className="bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300 flex items-center gap-1"
+              className="bg-gray-200 text-gray-800 px-[50px] py-2 rounded-md w-full md: hover:bg-gray-300 flex items-center gap-1"
             >
               <FaEye /> View
             </button>

@@ -42,7 +42,7 @@ const ProductDetail = () => {
 
   return (
     <div className="min-h-scree  bg-gray-60 px-4 py-10">
-      <div className="max-w-6xl mx-auto bg-white p-8 rounded-lg shadow flex flex-row  items-center md:items-start gap-8">
+      <div className="max-w-6xl mx-auto bg-white p-8 rounded-lg shadow flex flex-col md:flex-row items-center md:items-start gap-8">
         <div className="w-full md:w-1/2 flex justify-center">
           <img
             src={product.image}
@@ -63,17 +63,17 @@ const ProductDetail = () => {
           <h3 className="text-sm font-semibold text-blue-600 mb-1">Description</h3>
           <p className="text-gray-700 mb-6">{product.description}</p>
 
-          <div className="flex gap-3">
+          <div className="flex flex-col md:flex-row  gap-3">
             <button
               onClick={() => dispatch(addToCart(product))}
-              className="bg-blue-600 text-white px-5 py-2 rounded-md hover:bg-blue-700 transition"
+              className="bg-blue-600 text-white px-5 py-2 rounded-md w-full md:w-auto hover:bg-blue-700 transition"
             >
               Add to Cart
             </button>
 
             <button
               onClick={() => navigate("/")}
-              className="bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300 transition"
+              className="bg-gray-200 text-gray-800 px-4 py-2 w-full md:w-auto rounded-md hover:bg-gray-300 transition"
             >
               Back to Products
             </button>
@@ -88,7 +88,7 @@ const ProductDetail = () => {
         {related.length === 0 ? (
           <p className="text-gray-600">No related products found.</p>
         ) : (
-          <div className="grid grid-cols-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-6">
             {related.map((rp) => (
               <div
                 key={rp.id}
