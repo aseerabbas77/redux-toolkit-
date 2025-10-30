@@ -5,6 +5,8 @@ import Navbar from "./components/Navbar";
 import ProductList from "./components/ProductList";
 import Cart from "./components/Cart";
 import ProductDetail from "./components/ProductDetail.jsx";
+import Checkout from "./components/Checkout.jsx";
+import OrderFullFill from "./components/OrderFullFill.jsx";
 
 const App = () => {
   return (
@@ -15,6 +17,8 @@ const App = () => {
           <Route path="/" element={<ProductList />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/product/:id" element={<ProductDetail />} />
+          <Route path="/checkout" element={<Checkout/>}/>
+            <Route path="/Order" element={<OrderFullFill/>}/>
         </Routes>
       </div>
     </Router>
